@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/database.php';
+require_once __DIR__ . '/logger.php';
 
 function rateLimiter($maxRequests = 5, $windowSeconds = 60)
 {
@@ -24,6 +25,9 @@ function rateLimiter($maxRequests = 5, $windowSeconds = 60)
             if ($requestCount > $maxRequests) {
                 $retryAfter = ($lastWindow + $windowSeconds) - $now;
                 http_response_code(429);
+                logToDatabase('warning', 'Rate Limit Exceeded', [
+                    'ip' => $_SERVER['REMOTE_ADDR'] ?? 'CLI'
+                ]);                
                 die("Error: Too many requests. Please try again after $retryAfter seconds.");
             }
 
@@ -36,4 +40,4 @@ function rateLimiter($maxRequests = 5, $windowSeconds = 60)
     }
 }
 
-rateLimiter(5, 60);
+rateLimiter(100, 60);
