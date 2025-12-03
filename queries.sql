@@ -17,3 +17,11 @@ CREATE TABLE todos (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
+
+CREATE TABLE rate_limit (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  ip_address VARCHAR(45) NOT NULL,
+  request_count INT DEFAULT 0,
+  window_start TIMESTAMP NOT NULL,
+  UNIQUE KEY (ip_address)
+);
