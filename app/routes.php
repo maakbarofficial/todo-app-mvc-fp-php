@@ -4,7 +4,7 @@ require_once __DIR__ . '/controllers/auth.php';
 require_once __DIR__ . '/controllers/todo.php';
 
 /**
- * Route table: [method][path] = handler_function_name
+ * Routing: [method][path] = handler_function_name
  */
 $routes = [
     'GET' => [

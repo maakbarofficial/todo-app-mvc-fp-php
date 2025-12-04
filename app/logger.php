@@ -31,3 +31,17 @@ function logToFile($level, $message, $context = [])
     $entry = "[" . date('Y-m-d H:i:s') . "] {$level}: {$message} " . json_encode($context) . " {$userId}" . PHP_EOL;
     file_put_contents($logFile, $entry, FILE_APPEND);
 }
+
+logToDatabase('info', 'Route Request', [
+    'uri' => $_SERVER['REQUEST_URI'] ?? '',
+    'method' => $_SERVER['REQUEST_METHOD'] ?? '',
+    'get' => $_GET,
+    'post' => $_POST
+]);
+
+logToFile('info', 'Route Request', [
+    'uri' => $_SERVER['REQUEST_URI'] ?? '',
+    'method' => $_SERVER['REQUEST_METHOD'] ?? '',
+    'get' => $_GET,
+    'post' => $_POST
+]);
